@@ -20,8 +20,8 @@ import javax.validation.constraints.NotBlank;
 public class Blog implements Serializable {
     private static final long serialVersionUID = 1L;
     @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
-    private Long userId;
+    private int id;
+    private String user_id;
     @NotBlank(message = "标题不能为空")
     private String title;
     @NotBlank(message = "摘要不能为空")

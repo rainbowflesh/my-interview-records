@@ -1,14 +1,42 @@
 <template>
     <button @click="currenPage(1)">Force load</button>
+    <br />
+    <div class="commentContainer">
+        发起你的锐评
+        <div class="commentForm" :model="form" ref="form">
+            <input
+                type="text"
+                prop="id"
+                v-model="form.id"
+                placeholder="文章 id"
+            />
+            <input
+                type="text"
+                prop="remark"
+                v-model="form.remark"
+                placeholder="remark"
+            />
+            你的锐评: {{ form.remark }}
+            <br />
+            <button @click="submitForm('form')">评论</button>
+            <button @click="voteUp()">点赞</button>
+        </div>
+    </div>
     <div class="blogContainer" v-for="blog in blogs">
         <WelcomeItem>
+            blog id: {{ blog.id }}
+            <br />
             <template #icon>
                 <DocumentationIcon />
             </template>
-            <template #heading>{{ blog.title }}</template>
-            <a>{{ blog.description }}</a
+            <template #heading>标题: {{ blog.title }}</template>
+            <a>简介: {{ blog.description }}</a
             ><br />
-            {{ blog.content }}
+            内容: {{ blog.content }}
+            <br />
+            评论区: {{ blog.remark }}
+            <br />
+            👍: {{ blog.votes }}
         </WelcomeItem>
     </div>
     <WelcomeItem>
@@ -119,21 +147,45 @@ export default {
         SupportIcon,
         axios,
     },
-
+    data() {
+        return {
+            blogs: [],
+            form: reactive({
+                id: "",
+                remark: "",
+                votes: 0,
+            }),
+        };
+    },
+    methods: {
+        submitForm() {
+            axios.post("/blog/comment", this.form).then((res) => {
+                console.log(res);
+            });
+        },
+        voteUp() {
+            axios.get("/blog/" + this.form.id).then((res) => {
+                this.form.votes = res.data.data.votes + 1;
+                axios.post("/blog/votes", this.form);
+            });
+        },
+    },
     setup() {
         const blogs = ref([]);
         const page = ref(1);
         const total = ref(2);
         const pageSize = ref(3);
         const currenPage = () => {
-            console.log("loading..." + page.value);
             axios.get("/blogs?page=" + page.value).then((res) => {
                 var count = 0;
                 for (count in res.data.data.records) {
                     blogs.value.push({
+                        id: res.data.data.records[count].id,
                         title: res.data.data.records[count].title,
                         description: res.data.data.records[count].description,
                         content: res.data.data.records[count].content,
+                        remark: res.data.data.records[count].remark,
+                        votes: res.data.data.records[count].votes,
                     });
                 }
             });

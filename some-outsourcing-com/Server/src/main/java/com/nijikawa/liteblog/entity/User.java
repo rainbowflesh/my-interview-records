@@ -20,7 +20,7 @@ import javax.validation.constraints.NotBlank;
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
     @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
+    private String id;
     @NotBlank(message = "昵称不能为空")
     private String username;
     private String avatar;

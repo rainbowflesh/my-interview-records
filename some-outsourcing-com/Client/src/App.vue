@@ -77,9 +77,16 @@ export default {
                 });
         },
         submitForm() {
+            this.ruleForm.content =
+                this.ruleForm.description =
+                this.ruleForm.title =
+                    this.ruleForm.searchKeyword;
             axios.post("/blog/search", this.ruleForm).then((res) => {
-                console.log(res.data);
-                this.$data.searchResult = res.data.data;
+                if (res.data.data != null) {
+                    this.$data.searchResult = res.data.data;
+                } else {
+                    this.$data.searchResult = "naidesu";
+                }
             });
         },
     },

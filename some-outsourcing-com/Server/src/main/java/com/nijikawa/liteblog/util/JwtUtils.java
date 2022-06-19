@@ -17,7 +17,7 @@ public class JwtUtils {
     private String secret;
     private long expire;
     private String header;
-    public String generateToken(long userId) {
+    public String generateToken(String userId) {
         Date nowDate = new Date();
         //过期时间
         Date expireDate = new Date(nowDate.getTime() + expire * 1000);
