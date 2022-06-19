@@ -2,15 +2,7 @@ import { defineStore } from "pinia";
 
 export const useStore = defineStore("main", {
     state: () => ({
-        // const data = sessionStorage.getItem("userInfo");
-        // let historyArr = [];
-        // if (data) {
-        //     historyArr = JSON.parse(data);
-        // }
-        // const states = {
-        //     token: "",
-        //     userInfo: JSON.parse(sessionStorage.getItem("userInfo")),
-        // };
+        // 储存本地数据 (并没有)
         token: "",
         userInfo: JSON.parse(sessionStorage.getItem("userInfo")),
     }),
@@ -50,34 +42,3 @@ export const useStore = defineStore("main", {
         },
     },
 });
-
-// usage
-// import { store } from '@/stores/counter'
-
-// export default {
-//   setup() {
-//     const store = store()
-
-//     return {
-//       // you can return the whole store instance to use it in the template
-//       store,
-//     }
-//   },
-// }
-// const store = store()
-
-// // store.counter++
-// import { useCounterStore } from '../stores/counterStore'
-
-// export default {
-//   setup() {
-//     const counterStore = useCounterStore()
-
-//     return { counterStore }
-//   },
-//   computed: {
-//     tripleCounter() {
-//       return counterStore.counter * 3
-//     },
-//   },
-// }

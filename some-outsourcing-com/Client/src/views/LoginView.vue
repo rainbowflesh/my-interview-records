@@ -46,11 +46,13 @@ export default {
         };
     },
     methods: {
+        // 登录表单
         submitForm() {
             axios.post("/login", this.ruleForm).then((res) => {
                 const jwt = res.headers["authorization"];
                 const userInfo = res.data.data;
                 this.$data.store.setToken(jwt);
+                // 鉴权
                 // useStore.commit("SET_TOKEN", jwt);
                 // useStore.commit("SET_USERINFO", userInfo);
                 console.log("user?" + useStore.getUser);

@@ -1,5 +1,6 @@
 <template>
     <main>
+        <!-- 空模板 -->
         <TheWelcome />
     </main>
 </template>

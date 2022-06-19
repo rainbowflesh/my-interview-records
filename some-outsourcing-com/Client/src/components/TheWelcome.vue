@@ -39,6 +39,7 @@
             👍: {{ blog.votes }}
         </WelcomeItem>
     </div>
+    <!-- 这下面是 vue 自带的 -->
     <WelcomeItem>
         <template #icon>
             <DocumentationIcon />
@@ -158,11 +159,15 @@ export default {
         };
     },
     methods: {
+        // 评论提交方法
         submitForm() {
             axios.post("/blog/comment", this.form).then((res) => {
                 console.log(res);
             });
         },
+        // 点赞方法
+        // 评论和点赞一起提交会重置点赞数量
+        // 可以一直点赞
         voteUp() {
             axios.get("/blog/" + this.form.id).then((res) => {
                 this.form.votes = res.data.data.votes + 1;
@@ -175,6 +180,7 @@ export default {
         const page = ref(1);
         const total = ref(2);
         const pageSize = ref(3);
+        // 加载博客数据
         const currenPage = () => {
             axios.get("/blogs?page=" + page.value).then((res) => {
                 var count = 0;
@@ -199,6 +205,7 @@ export default {
         };
     },
     onMounted() {
+        // 然并卵, 需要手动触发一下, 触发按钮叫 "force load"
         currenPage();
     },
 };

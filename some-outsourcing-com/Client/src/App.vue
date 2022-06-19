@@ -64,6 +64,7 @@ export default {
         };
     },
     methods: {
+        // 登出 (没用)
         logout() {
             axios
                 .get("/logout", {
@@ -76,6 +77,7 @@ export default {
                     router.push("/login");
                 });
         },
+        // 搜索表单
         submitForm() {
             this.ruleForm.content =
                 this.ruleForm.description =

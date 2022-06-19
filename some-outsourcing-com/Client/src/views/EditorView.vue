@@ -55,6 +55,7 @@ export default {
         };
     },
     methods: {
+        // 提交新博客
         submitForm() {
             axios.post("/blog/post", this.form).then((res) => {
                 console.log(res);
