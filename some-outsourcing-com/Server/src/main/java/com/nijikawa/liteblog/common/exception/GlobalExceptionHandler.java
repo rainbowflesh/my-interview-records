@@ -10,19 +10,23 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+/**
+ * 全局异常处理器
+ *
+ * @author nijikawa
+ */
 @Slf4j
 @RestControllerAdvice
-// 全局异常处理
 public class GlobalExceptionHandler {
     // 返回状态码
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    @ExceptionHandler(value = ShiroException.class)
+    @ExceptionHandler(ShiroException.class)
     public static Result handler(ShiroException e) {
         log.error("shiro 运行异常", e);
         return Result.fail(401, e.getMessage(), null);
     }
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(value = MethodArgumentNotValidException.class)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
     public static Result handler(MethodArgumentNotValidException e) {
         log.error("实体校验异常", e);
         BindingResult bindingResult = e.getBindingResult();
@@ -30,13 +34,13 @@ public class GlobalExceptionHandler {
         return Result.fail(objectError.getDefaultMessage());
     }
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(value = IllegalArgumentException.class)
+    @ExceptionHandler(IllegalArgumentException.class)
     public static Result handler(IllegalArgumentException e) {
         log.error("Assert 断言异常", e);
         return Result.fail(e.getMessage());
     }
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(value = RuntimeException.class)
+    @ExceptionHandler(RuntimeException.class)
     public static Result handler(RuntimeException e) {
         log.error("运行异常", e);
         return Result.fail(e.getMessage());

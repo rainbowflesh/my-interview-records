@@ -19,9 +19,16 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+/**
+ * shiro 鉴权配置
+ * 没用
+ *
+ * @author nijikawa
+ */
 @Configuration
 public class ShiroConfig {
     @Autowired
+    private
     JwtFilter jwtFilter;
     @Bean
     public SessionManager sessionManager(RedisSessionDAO redisSessionDAO) {

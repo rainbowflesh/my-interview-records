@@ -19,11 +19,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * 登录控制器
+ *
+ * @author nijikawa
+ */
 @RestController
 public class AccountController {
     @Autowired
+    private
     UserService userService;
     @Autowired
+    private
     JwtUtils jwtUtils;
     @PostMapping("/v1/login")
     public Result login(@Validated @RequestBody LoginDto loginDto, HttpServletResponse response) {
@@ -45,7 +52,7 @@ public class AccountController {
     }
     @RequiresAuthentication
     @GetMapping("/v1/logout")
-    public Result logout() {
+    public static Result logout() {
         SecurityUtils.getSubject().logout();
         return Result.succ(null);
     }

@@ -7,12 +7,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * 用户控制器
+ * 没用
+ *
+ * @author nijikawa
+ */
 @RestController
 @RequestMapping("/v1/user")
 public class UserController {
     @Autowired
     UserService userService;
-    //认证登录
+    // 认证登录
     @RequiresAuthentication
     @GetMapping("/v1/index")
     public Result index() {
