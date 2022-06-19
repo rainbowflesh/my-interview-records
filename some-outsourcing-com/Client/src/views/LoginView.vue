@@ -48,8 +48,6 @@ export default {
     methods: {
         submitForm() {
             axios.post("/login", this.ruleForm).then((res) => {
-                // console.log(res.data);
-                // console.log("password=" + this.ruleForm.password);
                 const jwt = res.headers["authorization"];
                 const userInfo = res.data.data;
                 this.$data.store.setToken(jwt);

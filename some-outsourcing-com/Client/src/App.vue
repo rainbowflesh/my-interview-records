@@ -12,7 +12,7 @@
         <div class="wrapper">
             <HelloWorld msg="你好啊" />
             <!-- TODO: 全文搜索 -->
-            <!-- <div class="searchBarContainer">
+            <div class="searchBarContainer">
                 <div class="searchBarForm" :model="ruleForm" ref="ruleForm">
                     <input
                         type="text"
@@ -23,7 +23,8 @@
                     {{ ruleForm.searchKeyword }}
                     <button @click="submitForm('ruleForm')">search</button>
                 </div>
-            </div> -->
+            </div>
+            <div class="searchResult">搜索结果: {{ searchResult }}</div>
             <nav>
                 <RouterLink class="link" to="/">Blogs</RouterLink>
                 <RouterLink class="link" to="/login">Login</RouterLink>
@@ -39,35 +40,56 @@ import { RouterLink, RouterView } from "vue-router";
 import HelloWorld from "./components/HelloWorld.vue";
 </script>
 <script>
+import axios from "axios";
+import { useStore } from "@/stores/useStore";
+import router from "@/router";
 export default {
     name: "App",
+    components: {
+        axios,
+    },
     data() {
+        const store = useStore();
         return {
             user: { username: "Login first" },
             hasLogin: false,
+            ruleForm: {
+                searchKeyword: "",
+                title: "",
+                content: "",
+                description: "",
+            },
+            searchResult: "搜搜",
+            store,
         };
     },
     methods: {
         logout() {
-            const _this = this;
-            _this.$axios
+            axios
                 .get("/logout", {
                     headers: {
                         Authorization: localStorage.getItem("token"),
                     },
                 })
                 .then((res) => {
-                    _this.$store.commit("REMOVE_INFO");
-                    _this.$router.push("/login");
+                    store.commit("REMOVE_INFO");
+                    router.push("/login");
                 });
+        },
+        submitForm() {
+            axios.post("/blog/search", this.ruleForm).then((res) => {
+                console.log(res.data);
+                this.$data.searchResult = res.data.data;
+            });
         },
     },
     setup() {
-        if (this.$store.getters.getUser.username) {
-            this.user.username = this.$store.getters.getUser.username;
-            this.user.avatar = this.$store.getters.getUser.avatar;
+        if (store.getters.getUser.username) {
+            this.user.username = store.getters.getUser.username;
+            this.user.avatar = store.getters.getUser.avatar;
             this.hasLogin = true;
         }
+        return {};
     },
 };
 </script>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nijikawa.liteblog.mapper.CommentMapper">
+    <select id="selectByBigIntid" resultType="com.nijikawa.liteblog.entity.Comment">
+        SELECT id, content
+        FROM public.blogs
+        <trim prefix="WHERE">
+            <if test="id">
+                id = '#{bigIntId}'
+            </if>
+        </trim>
+    </select>
+</mapper>

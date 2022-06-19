@@ -14,7 +14,7 @@ public class UserController {
     UserService userService;
     //认证登录
     @RequiresAuthentication
-    @GetMapping("/index")
+    @GetMapping("/v1/index")
     public Result index() {
         User user = userService.getById(1L);
         return Result.succ(user);

@@ -6,7 +6,8 @@
                 <DocumentationIcon />
             </template>
             <template #heading>{{ blog.title }}</template>
-            <a>{{ blog.description }}</a>
+            <a>{{ blog.description }}</a
+            ><br />
             {{ blog.content }}
         </WelcomeItem>
     </div>
